@@ -1,0 +1,31 @@
+<div class="history-card">
+  <h2><i class="bi bi-bag-check"></i> Compras Realizadas</h2>
+  
+  @if (orders().length === 0) {
+    <div class="history-empty">
+      <p>No hay registros de compras pasadas.</p>
+    </div>
+  } @else {
+    <div class="orders-list">
+      @for (order of orders(); track order.id) {
+        <div class="order-item">
+          <div class="order-header">
+            <span class="order-id">Factura: {{ order.id }}</span>
+            <span class="order-date">{{ order.date | date:'shortTime' }}</span>
+          </div>
+          <div class="order-body">
+            <ul>
+              @for (item of order.items; track item.product.id) {
+                <li>{{ item.quantity }}x {{ item.product.name }}</li>
+              }
+            </ul>
+          </div>
+          <div class="order-footer">
+            <span>Total Pagado:</span>
+            <strong>${{ order.total | number:'1.2-2' }}</strong>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

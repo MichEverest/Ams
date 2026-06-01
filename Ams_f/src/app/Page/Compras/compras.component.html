@@ -1,0 +1,83 @@
+<div class="main-wrapper">
+  <nav class="glass-nav">
+    <div class="nav-left">
+      <button class="toggle-menu-btn" (click)="toggleSidebar()">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="logo">Ams</div>
+    </div>
+    <div class="auth-box">
+      <button class="login-btn" routerLink="/login">Log In / Sign Up</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Sistema de Compra Online</h1>
+    <p>Calidad y confianza en cada transacción</p>
+  </header>
+
+  <section class="container main-dashboard-layout">
+    
+    <div class="sidebar-overlay" [class.active]="isSidebarOpen()" (click)="toggleSidebar()"></div>
+
+    <div class="billing-sidebar" [class.open]="isSidebarOpen()">
+      <div class="sidebar-header">
+        <h3>Panel de Control</h3>
+        <button class="close-sidebar-btn" (click)="toggleSidebar()">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </div>
+      
+      <div class="sidebar-scroll-content">
+        <app-carrito></app-carrito>
+        <app-historial-compras></app-historial-compras>
+      </div>
+    </div>
+
+    <div class="catalog-section">
+      <div class="product-grid">
+        <div class="product-card" *ngFor="let item of items">
+          <div class="glass-inner">
+            <div class="product-img">
+              <img [src]="item.imagen" alt="Producto">
+            </div>
+            <div class="product-info">
+              <h3>{{item.nombre}}</h3>
+              <span class="price">{{item.precio | currency}}</span>
+            </div>
+            <button class="action-btn" (click)="onAdquirir(item)">Adquirir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="extra-info">
+    <div class="info-card">
+      <h4>Guía de Inicio Rápido</h4>
+      <p>1. Selecciona tu producto favorito del catálogo digital.<br>
+         2. Verifica las especificaciones y el tiempo de entrega estimado.</p>
+    </div>
+    <div class="info-card">
+      <h4>Desarrollo...</h4>
+      <p>....</p>
+    </div>
+  </section>
+
+  <footer class="glass-footer">
+    <div class="footer-content">
+      <div class="socials">
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+        <a href="https://twitter.com" target="_blank">X</a>
+      </div>
+      <p class="copy">© 2026 Ams. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="support-widget" routerLink="/soporte">
+    <img src="https://i2.wp.com/images.genshin-builds.com/genshin/characters/mualani/image.png?w=160" alt="Soporte">
+    <div class="support-text">Atención al cliente</div>
+  </div>
+</div>

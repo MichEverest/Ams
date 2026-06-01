@@ -1,0 +1,58 @@
+<div class="container center">
+  <div class="login-card">
+    
+    <!-- Panel Izquierdo: Formulario -->
+    <div class="form-section">
+      <div class="header-section">
+        <h2>Iniciar sesión</h2>
+        <p class="subtitle">Ingresa a tu cuenta de Ams</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="input-group">
+          <input formControlName="email" placeholder="Correo" [class.error]="form.get('email')?.invalid && form.get('email')?.touched" />
+          <span class="error-text" *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">El correo es obligatorio</span>
+        </div>
+
+        <div class="input-group">
+          <input type="password" formControlName="password" placeholder="Contraseña" [class.error]="form.get('password')?.invalid && form.get('password')?.touched" />
+          <span class="error-text" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">La contraseña es obligatoria</span>
+        </div>
+
+        <button type="submit" [disabled]="form.invalid || loading" class="btn-primary">
+          {{ loading ? 'Cargando...' : 'Compra' }}
+        </button>
+
+        <div class="divider">
+          <span>O continúa con</span>
+        </div>
+
+        <!-- Social Login -->
+        <div class="social-login">
+          <button type="button" class="social-btn"><i class="bi bi-google"></i></button>
+          <button type="button" class="social-btn"><i class="bi bi-twitter-x"></i></button>
+          <button type="button" class="social-btn"><i class="bi bi-github"></i></button>
+        </div>
+
+        <div class="register-link">
+          ¿No tienes una cuenta? <a routerLink="/register">Regístrate aquí</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Panel Derecho: Visual -->
+    <div class="visual-section">
+      <div class="visual-content">
+        <h3>X</h3>
+        <p>Desarrollo</p>
+        <img src="assets/img/tu-producto.png" alt="Preview" class="product-preview" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Soporte  -->
+<div class="support" routerLink="/soporte">
+  <div class="bubble">Atención al cliente</div>
+  <img src="https://i2.wp.com/images.genshin-builds.com/genshin/characters/mualani/image.png?strip=all&quality=100&w=160" alt="soporte" />
+</div>
