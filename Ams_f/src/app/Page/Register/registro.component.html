@@ -7,18 +7,15 @@
         <h2>Crea tu cuenta</h2>
         <p class="subtitle">Únete a Ams</p>
       </div>
-
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <div class="input-row">
           <div class="input-group">
             <input formControlName="name" placeholder="Nombre completo" />
           </div>
         </div>
-
         <div class="input-group">
           <input formControlName="email" placeholder="Correo electrónico" />
         </div>
-
         <div class="input-row">
           <div class="input-group">
             <input type="password" formControlName="password" placeholder="Contraseña" />
@@ -27,21 +24,17 @@
             <input type="password" formControlName="confirmPassword" placeholder="Confirmar" />
           </div>
         </div>
-
         <button type="submit" [disabled]="registerForm.invalid || loading" class="btn-primary">
           {{ loading ? 'Creando cuenta...' : 'Compra' }}
         </button>
-
         <div class="divider">
           <span>O regístrate con</span>
         </div>
-
         <div class="social-login">
           <button type="button" class="social-btn"><i class="bi bi-google"></i></button>
           <button type="button" class="social-btn"><i class="bi bi-twitter-x"></i></button>
           <button type="button" class="social-btn"><i class="bi bi-github"></i></button>
         </div>
-
         <div class="register-link">
           ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
         </div>
@@ -57,7 +50,6 @@
         <img src="assets/img/register-preview.png" alt="Registro" class="product-preview" />
       </div>
     </div>
-
   </div>
 </div>
 

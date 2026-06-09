@@ -1,0 +1,64 @@
+<div class="admin-wrapper">
+  <aside class="sidebar">
+    <h2>MichAdmin</h2>
+    
+    <div class="audio-viz">
+      <div class="bar" *ngFor="let i of [].constructor(12)"></div>
+    </div>
+    
+    <ul>
+      <li (click)="irATienda()" class="menu-item">Tienda</li>
+      <li (click)="logout()" class="menu-item logout">Salir</li>
+    </ul>
+    
+    <div class="lottie-container">
+      <ng-lottie [options]="lottieOptions"></ng-lottie>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="kpi-container">
+      <div class="glass-card">
+        <h3>Ingresos</h3>
+        <p>{{stats.ingresos | currency}}</p>
+      </div>
+      <div class="glass-card">
+        <h3>Usuarios</h3>
+        <p>{{stats.usuarios}}</p> 
+      </div>
+      <div class="glass-card">
+        <h3>Ventas</h3>
+        <p>{{stats.ventas}}</p>
+      </div>
+    </div>
+
+    <div class="glass-card chart-container">
+      <canvas #chartCanvas></canvas>
+    </div>
+
+    <div class="glass-card table-container">
+      <div *ngIf="usuarios.length === 0" style="text-align: center; padding: 20px; color: rgba(255,255,255,0.6); font-style: italic;">
+        Conectando con el servidor de usuarios...
+      </div>
+
+      <table *ngIf="usuarios.length > 0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usuarios">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

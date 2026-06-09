@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../Service/auth.service';
 
 @Component({
   selector: 'auth-login',
@@ -11,29 +12,40 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  form: any;
+  form = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
+  
   loading = false;
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-  }
-
   submit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+    if (this.form.invalid) return;
 
     this.loading = true;
 
-    setTimeout(() => {
-      console.log(this.form.value);
-      this.loading = false;
-    }, 1500);
-  }
+    const credenciales = {
+      email: this.form.value.email ?? '',
+      password: this.form.value.password ?? ''
+    };
 
+    this.authService.login(credenciales).subscribe({
+      next: (response: any) => {
+        this.loading = false;
+        if (response.role === 'ADMIN') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/compras']);
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        alert('Error: Credenciales incorrectas');
+      }
+    });
+  }
 }
