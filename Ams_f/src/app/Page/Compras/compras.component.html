@@ -90,6 +90,15 @@
       </button>
       <div class="logo">Ams</div>
     </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" placeholder="Buscar productos, juegos, recargas...">
+        <button class="search-btn">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
     
     <div class="auth-box">
       <button *ngIf="!user" class="login-btn" routerLink="/login">Log In / Sign Up</button>
@@ -124,10 +133,55 @@
     </div>
   </nav>
 
-  <header class="hero">
-    <h1>Sistema de Compra Online</h1>
-    <p>Calidad y confianza en cada transacción</p>
-  </header>
+  <section class="carousel-section">
+    <div class="carousel-wrapper">
+      <button class="carousel-control prev" (click)="prevSlide()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="carousel-track" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+        <div class="carousel-slide">
+          <img src="https://fastcdn.hoyoverse.com/content-v2/hk4e/124723/7c260c430030f2c26c868da1e31661ca_144726732602737738.jpg" alt="Banner 1">
+          <div class="carousel-caption">
+            <h2>RECARGA HOY EN AMS</h2>
+            <p>Aprovecha los beneficios exclusivos con cada transacción</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurbished-landing-header-202408?wid=3850&hei=608&fmt=png-alpha&.v=bjlRbDBQUDlscmh1YWpQRVE3dmZBZkY0UWdLQ3FaNzJ5ZWhwazJlY0w4dnpwS1RCbFM2ZmVyWlFwdGNNamZmVFVBdWN3Zmtjd2twOGYybk0vNThqSFpjclNCQnZFT24xZ2VpaURCb3E5TG9VRk5BYjU4dkMrYjBKSjFqVXFOVGg" alt="Banner 2">
+          <div class="carousel-caption">
+            <h2>RECOMPENSAS EXCLUSIVAS</h2>
+            <p>Convierte tus puntos Ams en créditos al instante</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://cdn2.steamgriddb.com/hero_thumb/69c7e73fea7ad35e9000ce41e1622036.jpg" alt="Banner 3">
+          <div class="carousel-caption">
+            <h2>CALIDAD Y CONFIANZA</h2>
+            <p>Explora nuestro catálogo digital con soporte permanente</p>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://i.ytimg.com/vi/0LWF147-bgA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDQMktUfLXfvRuE9do8RVb6tmqWHQ" alt="Banner 4">
+          <div class="carousel-caption">
+            <h2>MÁXIMA SEGURIDAD</h2>
+            <p>Tus compras están totalmente protegidas en nuestra plataforma</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control next" (click)="nextSlide()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+      <div class="carousel-indicators">
+        <span class="indicator-dot" [class.active]="currentSlide === 0" (click)="setSlide(0)"></span>
+        <span class="indicator-dot" [class.active]="currentSlide === 1" (click)="setSlide(1)"></span>
+        <span class="indicator-dot" [class.active]="currentSlide === 2" (click)="setSlide(2)"></span>
+        <span class="indicator-dot" [class.active]="currentSlide === 3" (click)="setSlide(3)"></span>
+      </div>
+    </div>
+  </section>
 
   <section class="container main-dashboard-layout">
     <div class="sidebar-overlay" [class.active]="isSidebarOpen()" (click)="toggleSidebar()"></div>

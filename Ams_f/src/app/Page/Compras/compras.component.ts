@@ -110,14 +110,15 @@
 //   }
 // }
 
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CartService, Product } from '../../Service/cart.service'; 
-import { UserService } from '../../Service/user.service'; // Asegúrate de que la ruta a tu UserService sea la correcta
+import { UserService } from '../../Service/user.service'; 
 import { CarritoComponent } from '../Carrito/carrito.component';
 import { HistorialComprasComponent } from '../historial-compras/historial-compras.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-compras',
@@ -126,26 +127,39 @@ import { HistorialComprasComponent } from '../historial-compras/historial-compra
   templateUrl: './compras.component.html',
   styleUrls: ['./compras.component.scss']
 })
-export class ComprasComponent implements OnInit {
+export class ComprasComponent implements OnInit, OnDestroy {
 
   private cartService = inject(CartService);
   private http = inject(HttpClient);
   public userService = inject(UserService);
 
+  private userSub!: Subscription;
+  private carouselInterval: any;
+
   isSidebarOpen = signal<boolean>(false);
   dropdownVisible = false;
   items: any[] = [];
   user: any = null;
+  
+  currentSlide = 0;
+  totalSlides = 4;
 
   constructor() {}
 
   ngOnInit(): void {
     this.obtenerProductosDelBackend();
+    this.resetCarouselInterval();
     
-    // Escuchar el estado global del usuario logueado
-    this.userService.currentUser$.subscribe(userData => {
+    this.userSub = this.userService.currentUser$.subscribe(userData => {
       this.user = userData;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+    this.clearCarouselInterval();
   }
 
   obtenerProductosDelBackend() {
@@ -157,6 +171,33 @@ export class ComprasComponent implements OnInit {
         console.error('Error al conectar con el backend de Ams:', err);
       }
     });
+  }
+
+  resetCarouselInterval() {
+    this.clearCarouselInterval();
+    this.carouselInterval = setInterval(() => {
+      this.nextSlide();
+    }, 7000);
+  }
+
+  clearCarouselInterval() {
+    if (this.carouselInterval) {
+      clearInterval(this.carouselInterval);
+    }
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+  }
+
+  prevSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+    this.resetCarouselInterval();
+  }
+
+  setSlide(index: number) {
+    this.currentSlide = index;
+    this.resetCarouselInterval();
   }
 
   toggleSidebar() {
